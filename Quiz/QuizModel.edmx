@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="lang">
+          <Key>
+            <PropertyRef Name="id_lang" />
+          </Key>
+          <Property Name="id_lang" Type="int" Nullable="false" />
+          <Property Name="name_Lang" Type="varchar" MaxLength="39" />
+        </EntityType>
+        <EntityType Name="profile">
+          <Key>
+            <PropertyRef Name="id_profile" />
+          </Key>
+          <Property Name="id_profile" Type="int" Nullable="false" />
+          <Property Name="id_user" Type="int" />
+          <Property Name="id_lang" Type="int" />
+          <Property Name="socre" Type="int" />
+          <Property Name="duration" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="id_Question" />
+          </Key>
+          <Property Name="id_Question" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question" Type="varchar" MaxLength="300" />
+          <Property Name="answer" Type="varchar" MaxLength="60" />
+          <Property Name="opt1" Type="varchar" MaxLength="60" />
+          <Property Name="opt2" Type="varchar" MaxLength="60" />
+          <Property Name="opt3" Type="varchar" MaxLength="60" />
+          <Property Name="id_lang" Type="int" />
+        </EntityType>
+        <EntityType Name="usert">
+          <Key>
+            <PropertyRef Name="user_Id" />
+          </Key>
+          <Property Name="user_Id" Type="int" Nullable="false" />
+          <Property Name="ider_Name" Type="varchar" MaxLength="30" />
+          <Property Name="user_password" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK__profile__id_lang__2C3393D0">
+          <End Role="lang" Type="Self.lang" Multiplicity="0..1" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lang">
+              <PropertyRef Name="id_lang" />
+            </Principal>
+            <Dependent Role="profile">
+              <PropertyRef Name="id_lang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profile__id_user__2B3F6F97">
+          <End Role="usert" Type="Self.usert" Multiplicity="0..1" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usert">
+              <PropertyRef Name="user_Id" />
+            </Principal>
+            <Dependent Role="profile">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__id_lan__286302EC">
+          <End Role="lang" Type="Self.lang" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lang">
+              <PropertyRef Name="id_lang" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="id_lang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuizModelStoreContainer">
+          <EntitySet Name="lang" EntityType="Self.lang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profile" EntityType="Self.profile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usert" EntityType="Self.usert" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__profile__id_lang__2C3393D0" Association="Self.FK__profile__id_lang__2C3393D0">
+            <End Role="lang" EntitySet="lang" />
+            <End Role="profile" EntitySet="profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profile__id_user__2B3F6F97" Association="Self.FK__profile__id_user__2B3F6F97">
+            <End Role="usert" EntitySet="usert" />
+            <End Role="profile" EntitySet="profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__id_lan__286302EC" Association="Self.FK__Question__id_lan__286302EC">
+            <End Role="lang" EntitySet="lang" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="lang">
+          <Key>
+            <PropertyRef Name="id_lang" />
+          </Key>
+          <Property Name="id_lang" Type="Int32" Nullable="false" />
+          <Property Name="name_Lang" Type="String" MaxLength="39" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="profiles" Relationship="Self.FK__profile__id_lang__2C3393D0" FromRole="lang" ToRole="profile" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK__Question__id_lan__286302EC" FromRole="lang" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="profile">
+          <Key>
+            <PropertyRef Name="id_profile" />
+          </Key>
+          <Property Name="id_profile" Type="Int32" Nullable="false" />
+          <Property Name="id_user" Type="Int32" />
+          <Property Name="id_lang" Type="Int32" />
+          <Property Name="socre" Type="Int32" />
+          <Property Name="duration" Type="Time" Precision="7" />
+          <NavigationProperty Name="lang" Relationship="Self.FK__profile__id_lang__2C3393D0" FromRole="profile" ToRole="lang" />
+          <NavigationProperty Name="usert" Relationship="Self.FK__profile__id_user__2B3F6F97" FromRole="profile" ToRole="usert" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="id_Question" />
+          </Key>
+          <Property Name="id_Question" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question1" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="answer" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="opt1" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="opt2" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="opt3" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="id_lang" Type="Int32" />
+          <NavigationProperty Name="lang" Relationship="Self.FK__Question__id_lan__286302EC" FromRole="Question" ToRole="lang" />
+        </EntityType>
+        <EntityType Name="usert">
+          <Key>
+            <PropertyRef Name="user_Id" />
+          </Key>
+          <Property Name="user_Id" Type="Int32" Nullable="false" />
+          <Property Name="ider_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="user_password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="profiles" Relationship="Self.FK__profile__id_user__2B3F6F97" FromRole="usert" ToRole="profile" />
+        </EntityType>
+        <Association Name="FK__profile__id_lang__2C3393D0">
+          <End Role="lang" Type="Self.lang" Multiplicity="0..1" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lang">
+              <PropertyRef Name="id_lang" />
+            </Principal>
+            <Dependent Role="profile">
+              <PropertyRef Name="id_lang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__id_lan__286302EC">
+          <End Role="lang" Type="Self.lang" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lang">
+              <PropertyRef Name="id_lang" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="id_lang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__profile__id_user__2B3F6F97">
+          <End Role="usert" Type="Self.usert" Multiplicity="0..1" />
+          <End Role="profile" Type="Self.profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usert">
+              <PropertyRef Name="user_Id" />
+            </Principal>
+            <Dependent Role="profile">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuizEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="langs" EntityType="Self.lang" />
+          <EntitySet Name="profiles" EntityType="Self.profile" />
+          <EntitySet Name="Questions" EntityType="Self.Question" />
+          <EntitySet Name="userts" EntityType="Self.usert" />
+          <AssociationSet Name="FK__profile__id_lang__2C3393D0" Association="Self.FK__profile__id_lang__2C3393D0">
+            <End Role="lang" EntitySet="langs" />
+            <End Role="profile" EntitySet="profiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__id_lan__286302EC" Association="Self.FK__Question__id_lan__286302EC">
+            <End Role="lang" EntitySet="langs" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__profile__id_user__2B3F6F97" Association="Self.FK__profile__id_user__2B3F6F97">
+            <End Role="usert" EntitySet="userts" />
+            <End Role="profile" EntitySet="profiles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuizModelStoreContainer" CdmEntityContainer="QuizEntities">
+          <EntitySetMapping Name="langs">
+            <EntityTypeMapping TypeName="QuizModel.lang">
+              <MappingFragment StoreEntitySet="lang">
+                <ScalarProperty Name="id_lang" ColumnName="id_lang" />
+                <ScalarProperty Name="name_Lang" ColumnName="name_Lang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="profiles">
+            <EntityTypeMapping TypeName="QuizModel.profile">
+              <MappingFragment StoreEntitySet="profile">
+                <ScalarProperty Name="id_profile" ColumnName="id_profile" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_lang" ColumnName="id_lang" />
+                <ScalarProperty Name="socre" ColumnName="socre" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="QuizModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="id_Question" ColumnName="id_Question" />
+                <ScalarProperty Name="Question1" ColumnName="Question" />
+                <ScalarProperty Name="answer" ColumnName="answer" />
+                <ScalarProperty Name="opt1" ColumnName="opt1" />
+                <ScalarProperty Name="opt2" ColumnName="opt2" />
+                <ScalarProperty Name="opt3" ColumnName="opt3" />
+                <ScalarProperty Name="id_lang" ColumnName="id_lang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="userts">
+            <EntityTypeMapping TypeName="QuizModel.usert">
+              <MappingFragment StoreEntitySet="usert">
+                <ScalarProperty Name="user_Id" ColumnName="user_Id" />
+                <ScalarProperty Name="ider_Name" ColumnName="ider_Name" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
