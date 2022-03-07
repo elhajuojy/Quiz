@@ -72,6 +72,12 @@
     <Compile Include="Question.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="QuizForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuizForm.Designer.cs">
+      <DependentUpon>QuizForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="QuizModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +108,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="QuizForm.resx">
+      <DependentUpon>QuizForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
